@@ -128,7 +128,7 @@ def draw_part_of_cube(cube_coords,canvas):
 def moveU(direction,existing_cube,cube_coords,cube_colours,t,canvas):
     for polygon in existing_cube:
         canvas.delete(polygon)
-
+    # print(cube_coords)
     angle_coeff = 1
     if direction=="U":
         angle_coeff = -1
@@ -302,7 +302,7 @@ def moveR(direction,existing_cube,cube_coords,cube_colours,t,canvas):
         canvas.delete(polygon)
 
     angle_coeff = 1
-    if direction=="R" or "M'":
+    if direction=="R" or direction=="M'":
         angle_coeff = -1
 
     cube2d = convert(cube_coords)
@@ -570,13 +570,76 @@ def moveF(direction,existing_cube,cube_coords,cube_colours,t,canvas):
     colourCube(cube_coords,cube_colours)
     cube2d = convert(cube_coords)
     return draw_part_of_cube(cube2d[:3],canvas)
+def moveY(direction,existing_cube,cube_coords,cube_colours,t,canvas):
+    if direction =="y2":
+        s.single_move(cube_colours,"U")
+        s.single_move(cube_colours,"U")
+        s.single_move(cube_colours,"D")
+        s.single_move(cube_colours,"D")
+        s.single_move(cube_colours,"y2")
+        colourCube(cube_coords,cube_colours)
+        cube2d = convert(cube_coords)
+        return draw_part_of_cube(cube2d[:3],canvas)
 
+    elif direction =="y'":
+        s.single_move(cube_colours,"U'")
+        s.single_move(cube_colours,"D")
+        s.single_move(cube_colours,"y'")
+        colourCube(cube_coords,cube_colours)
+        cube2d = convert(cube_coords)
+        return draw_part_of_cube(cube2d[:3],canvas)
+    else:
+        s.single_move(cube_colours,"U")
+        s.single_move(cube_colours,"D'")
+        s.single_move(cube_colours,"y")
+        colourCube(cube_coords,cube_colours)
+        cube2d = convert(cube_coords)
+        return draw_part_of_cube(cube2d[:3],canvas)
+
+def moveX(direction,existing_cube,cube_coords,cube_colours,t,canvas):
+    if direction =="x2":
+        s.single_move(cube_colours,"R")
+        s.single_move(cube_colours,"R")
+        s.single_move(cube_colours,"L'")
+        s.single_move(cube_colours,"L'")
+        s.single_move(cube_colours,"M'")
+        s.single_move(cube_colours,"M'")
+        colourCube(cube_coords,cube_colours)
+        cube2d = convert(cube_coords)
+        return draw_part_of_cube(cube2d[:3],canvas)
+
+    elif direction =="x'":
+        s.single_move(cube_colours,"R'")
+        s.single_move(cube_colours,"L")
+        s.single_move(cube_colours,"M")
+        colourCube(cube_coords,cube_colours)
+        cube2d = convert(cube_coords)
+        return draw_part_of_cube(cube2d[:3],canvas)
+    else:
+        s.single_move(cube_colours,"R")
+        s.single_move(cube_colours,"L'")
+        s.single_move(cube_colours,"M'")
+        colourCube(cube_coords,cube_colours)
+        cube2d = convert(cube_coords)
+        return draw_part_of_cube(cube2d[:3],canvas)
+
+def moveM(direction,existing_cube,cube_coords,cube_colours,t,canvas):
+    s.single_move(cube_colours,direction)
+    colourCube(cube_coords,cube_colours)
+    cube2d = convert(cube_coords)
+    return draw_part_of_cube(cube2d[:3],canvas)
+def moveS(direction,existing_cube,cube_coords,cube_colours,t,canvas):
+    s.single_move(cube_colours,direction)
+    colourCube(cube_coords,cube_colours)
+    cube2d = convert(cube_coords)
+    return draw_part_of_cube(cube2d[:3],canvas)
 def moveB(direction,existing_cube,cube_coords,cube_colours,t,canvas):
     for polygon in existing_cube:
         canvas.delete(polygon)
 
     angle_coeff = 1
-    if direction=="B'" or "S2":
+
+    if direction=="B'" or direction=="S2":
         angle_coeff = -1
 
     cube2d = convert(cube_coords)
@@ -660,7 +723,6 @@ def moveB(direction,existing_cube,cube_coords,cube_colours,t,canvas):
 
 
     s.single_move(cube_colours,direction)
-    # print(cube_colours)
     colourCube(cube_coords,cube_colours)
     cube2d = convert(cube_coords)
     return draw_part_of_cube(cube2d[:3],canvas)
@@ -675,21 +737,141 @@ def three_d_cube_moves(cube_coords,cube_colours,t,moves,canvas,exist_cube_loc = 
     poly_loc = draw_part_of_cube(cube2d[:3],canvas)
     for move in moves:
         if move[0]=='U':
-            poly_loc = moveU(move,poly_loc,cube_coords,cube_colours,t,canvas)
-        elif move[0]=='M':
-            poly_loc = moveR(move,poly_loc,cube_coords,cube_colours,t,canvas)
-        elif move[0]=='S':
-            poly_loc = moveB(move,poly_loc,cube_coords,cube_colours,t,canvas)
+            if len(move) == 2 :  
+                if move[1]=='2' :        
+                    poly_loc = moveU('U',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveU('U',poly_loc,cube_coords,cube_colours,t,canvas)
+                else:
+                    poly_loc = moveU(move,poly_loc,cube_coords,cube_colours,t,canvas)   
+            else :
+                poly_loc = moveU(move,poly_loc,cube_coords,cube_colours,t,canvas)
         elif move[0]=='D':
-            poly_loc = moveD(move,poly_loc,cube_coords,cube_colours,t,canvas)
+            if len(move) == 2 :  
+                if move[1]=='2' :        
+                    poly_loc = moveD('D',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveD('D',poly_loc,cube_coords,cube_colours,t,canvas)
+                else:
+                    poly_loc = moveD(move,poly_loc,cube_coords,cube_colours,t,canvas)   
+            else :
+                poly_loc = moveD(move,poly_loc,cube_coords,cube_colours,t,canvas)
+
         elif move[0]=='F':
-            poly_loc = moveF(move,poly_loc,cube_coords,cube_colours,t,canvas)
+            if len(move) == 2 :  
+                if move[1]=='2' :        
+                    poly_loc = moveF('F',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveF('F',poly_loc,cube_coords,cube_colours,t,canvas)
+                else:
+                    poly_loc = moveF(move,poly_loc,cube_coords,cube_colours,t,canvas)   
+            else :
+                poly_loc = moveF(move,poly_loc,cube_coords,cube_colours,t,canvas)
+
         elif move[0]=='B':
-            poly_loc = moveB(move,poly_loc,cube_coords,cube_colours,t,canvas)
+            if len(move) == 2 :  
+                if move[1]=='2' :        
+                    poly_loc = moveB('B',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveB('B',poly_loc,cube_coords,cube_colours,t,canvas)
+                else:
+                    poly_loc = moveB(move,poly_loc,cube_coords,cube_colours,t,canvas)   
+            else :
+                poly_loc = moveB(move,poly_loc,cube_coords,cube_colours,t,canvas)
+        elif move[0]=='S':
+            poly_loc = moveS(move,poly_loc,cube_coords,cube_colours,t,canvas)
+        elif move[0]=='M':
+            poly_loc = moveM(move,poly_loc,cube_coords,cube_colours,t,canvas) 
         elif move[0]=='R':
-            poly_loc = moveR(move,poly_loc,cube_coords,cube_colours,t,canvas)
+            if len(move) == 2 :  
+                if move[1]=='2' :        
+                    poly_loc = moveR('R',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveR('R',poly_loc,cube_coords,cube_colours,t,canvas)
+                else:
+                    poly_loc = moveR(move,poly_loc,cube_coords,cube_colours,t,canvas)   
+            else :
+                poly_loc = moveR(move,poly_loc,cube_coords,cube_colours,t,canvas) 
+        elif move[0] == "r":
+            if len(move)==2  :
+                if move[1]=='2' :
+                    poly_loc = moveL('L',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveL('L',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveX("x2",poly_loc,cube_coords,cube_colours,t,canvas)
+                else:
+                    poly_loc = moveL("L'",poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveX("x'",poly_loc,cube_coords,cube_colours,t,canvas)
+            else:
+                poly_loc = moveL("L",poly_loc,cube_coords,cube_colours,t,canvas)
+                poly_loc = moveX("x",poly_loc,cube_coords,cube_colours,t,canvas)
+        elif move[0] == "l":
+            if len(move)==2  :
+                if move[1]=='2' :
+                    poly_loc = moveR('R',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveR('R',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveX("x2",poly_loc,cube_coords,cube_colours,t,canvas)
+                else:
+                    poly_loc = moveR("R'",poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveX("x",poly_loc,cube_coords,cube_colours,t,canvas)
+            else:
+                poly_loc = moveR("R",poly_loc,cube_coords,cube_colours,t,canvas)
+                poly_loc = moveX("x'",poly_loc,cube_coords,cube_colours,t,canvas)
+
+        elif move[0] == "u":
+            if len(move)==2  :
+                if move[1]=='2' :
+                    poly_loc = moveD('D',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveD('D',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveY("y2",poly_loc,cube_coords,cube_colours,t,canvas)
+                else:
+                    poly_loc = moveD("D'",poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveY("y'",poly_loc,cube_coords,cube_colours,t,canvas)
+            else:
+                poly_loc = moveD("D",poly_loc,cube_coords,cube_colours,t,canvas)
+                poly_loc = moveY("y",poly_loc,cube_coords,cube_colours,t,canvas)
+
+        elif move[0] == "d":
+            if len(move)==2  :
+                if move[1]=='2' :
+                    poly_loc = moveU('U',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveU('U',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveY("y2",poly_loc,cube_coords,cube_colours,t,canvas)
+                else:
+                    poly_loc = moveU("U'",poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveY("y",poly_loc,cube_coords,cube_colours,t,canvas)
+            else:
+                poly_loc = moveU("U",poly_loc,cube_coords,cube_colours,t,canvas)
+                poly_loc = moveY("y'",poly_loc,cube_coords,cube_colours,t,canvas)
+
+        elif move[0] == "y":
+            poly_loc = moveY(move,poly_loc,cube_coords,cube_colours,t,canvas)
+
+        elif move[0] == "x":
+            poly_loc = moveX(move,poly_loc,cube_coords,cube_colours,t,canvas)
+            # if len(move) == 2 :  
+            #     if move[1]=='2' :
+            #         poly_loc = moveR("R",poly_loc,cube_coords,cube_colours,t,canvas) 
+            #         poly_loc = moveR("R",poly_loc,cube_coords,cube_colours,t,canvas) 
+            #         poly_loc = moveL("L'",poly_loc,cube_coords,cube_colours,t,canvas)
+            #         poly_loc = moveL("L'",poly_loc,cube_coords,cube_colours,t,canvas) 
+            #         poly_loc = moveM("M'",poly_loc,cube_coords,cube_colours,t,canvas)
+            #         poly_loc = moveM("M'",poly_loc,cube_coords,cube_colours,t,canvas)
+            #     else:
+            #         # poly_loc = moveR("R'",poly_loc,cube_coords,cube_colours,t,canvas) 
+            #         # poly_loc = moveL("L",poly_loc,cube_coords,cube_colours,t,canvas) 
+            #         # poly_loc = moveM("M",poly_loc,cube_coords,cube_colours,t,canvas) 
+                    
+            # else:
+            #     # poly_loc = moveR("R",poly_loc,cube_coords,cube_colours,t,canvas) 
+            #     # poly_loc = moveL("L'",poly_loc,cube_coords,cube_colours,t,canvas) 
+            #     # poly_loc = moveM("M'",poly_loc,cube_coords,cube_colours,t,canvas)                
+
         else:
-            poly_loc = moveL(move,poly_loc,cube_coords,cube_colours,t,canvas)
+            if len(move) == 2 :  
+                if move[1]=='2' :        
+                    poly_loc = moveL('L',poly_loc,cube_coords,cube_colours,t,canvas)
+                    poly_loc = moveL('L',poly_loc,cube_coords,cube_colours,t,canvas)
+    
+                else:
+                    poly_loc = moveL(move,poly_loc,cube_coords,cube_colours,t,canvas)   
+            else:
+                poly_loc = moveL(move,poly_loc,cube_coords,cube_colours,t,canvas)
+        
     return poly_loc
 
 rubik_cube_outline = [[(-1,1,-1),(1,1,-1),(1,1,1),(-1,1,1)],
@@ -709,5 +891,5 @@ if __name__ == '__main__':
     canvas = tk.Canvas(root, height = 400, width = 400)
     canvas.pack()
     # three_d_cube_moves(rubiks_cube,[['r', 'w', 'y', 'r', 'b', 'w', 'w', 'y', 'o'], ['r', 'b', 'w', 'w', 'w', 'g', 'r', 'r', 'w'], ['b', 'r', 'g', 'r', 'r', 'g', 'b', 'y', 'g'], ['o', 'b', 'y', 'o', 'y', 'g', 'o', 'y', 'y'], ['b', 'b', 'g', 'w', 'o', 'o', 'b', 'b', 'g'], ['y', 'y', 'r', 'o', 'g', 'g', 'o', 'o', 'w']],0.5,["f'","l'","b'",'f','d',"r'",'u'],canvas)
-    three_d_cube_moves(rubiks_cube,[['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'], ['r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r'], ['y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y'], ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g'], ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'], ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']],0.5,["S2"],canvas)
+    three_d_cube_moves(rubiks_cube,[['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'], ['r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r'], ['y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y'], ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g'], ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'], ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']],0.5,["S'"],canvas)
     root.mainloop()
