@@ -891,5 +891,10 @@ if __name__ == '__main__':
     canvas = tk.Canvas(root, height = 400, width = 400)
     canvas.pack()
     # three_d_cube_moves(rubiks_cube,[['r', 'w', 'y', 'r', 'b', 'w', 'w', 'y', 'o'], ['r', 'b', 'w', 'w', 'w', 'g', 'r', 'r', 'w'], ['b', 'r', 'g', 'r', 'r', 'g', 'b', 'y', 'g'], ['o', 'b', 'y', 'o', 'y', 'g', 'o', 'y', 'y'], ['b', 'b', 'g', 'w', 'o', 'o', 'b', 'b', 'g'], ['y', 'y', 'r', 'o', 'g', 'g', 'o', 'o', 'w']],0.5,["f'","l'","b'",'f','d',"r'",'u'],canvas)
-    three_d_cube_moves(rubiks_cube,[['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'], ['r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r'], ['y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y'], ['g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g'], ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'], ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']],0.5,["S'"],canvas)
+    three_d_cube_moves(rubiks_cube,[['y', 'y', 'b', 'o', 'b', 'y', 'y', 'b', 'y'],
+ ['y', 'w', 'r', 'g', 'r', 'g', 'g', 'r', 'g'],
+ ['o', 'o', 'g', 'y', 'y', 'r', 'g', 'o', 'o'],
+ ['w', 'w', 'w', 'w', 'g', 'r', 'o', 'g', 'w'],
+ ['b', 'b', 'o', 'y', 'o', 'g', 'b', 'o', 'b'],
+ ['r', 'w', 'r', 'b', 'w', 'b', 'r', 'r', 'w']],0.5,["D", "L", "B", "U", "R", "F", "D'", "L'", "B'", "U'", "R'", "F'"],canvas)
     root.mainloop()
